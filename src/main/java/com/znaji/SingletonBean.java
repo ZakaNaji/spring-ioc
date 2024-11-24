@@ -1,5 +1,6 @@
 package com.znaji;
 
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Component;
@@ -7,23 +8,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class SingletonBean {
 
-    private PrototypeBean prototypeBean;
+    private ObjectFactory<PrototypeBean> prototypeBeanObjectFactory;
 
     public SingletonBean() {
         System.out.println("SingletonBean created!");
     }
 
     public void sayHello() {
-        getPrototypeBean().sayHello();
+        final PrototypeBean prototypeBean = prototypeBeanObjectFactory.getObject();
+        prototypeBean.sayHello();
     }
 
     public void sayHelloAgain() {
-        getPrototypeBean().sayHello(); // use the same prototype bean (not the desired behavior)
+        final PrototypeBean prototypeBean = prototypeBeanObjectFactory.getObject();
+        prototypeBean.sayHello();
     }
 
-
-    @Lookup
-    public PrototypeBean getPrototypeBean() {
-        return null;
+    @Autowired
+    public void setPrototypeBeanObjectFactory(ObjectFactory<PrototypeBean> prototypeBeanObjectFactory) {
+        this.prototypeBeanObjectFactory = prototypeBeanObjectFactory;
     }
 }
