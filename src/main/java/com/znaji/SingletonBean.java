@@ -1,6 +1,7 @@
 package com.znaji;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,12 +21,9 @@ public class SingletonBean {
         getPrototypeBean().sayHello(); // use the same prototype bean (not the desired behavior)
     }
 
-    @Autowired
-    public void setPrototypeBean(PrototypeBean prototypeBean) {
-        this.prototypeBean = prototypeBean;
-    }
 
+    @Lookup
     public PrototypeBean getPrototypeBean() {
-        return prototypeBean;
+        return null;
     }
 }
