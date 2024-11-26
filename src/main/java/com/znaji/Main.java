@@ -8,10 +8,9 @@ public class Main {
         final AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
-        SingletonBean singletonBean1 = context.getBean(SingletonBean.class);
-        System.out.println("Calling sayHello() on singletonBean1");
-        singletonBean1.sayHello();
-        System.out.println("Calling sayHelloAgain() on singletonBean1");
-        singletonBean1.sayHelloAgain();
+        context.registerShutdownHook();
+
+        final LifeCycleBean lifeCycleBean = context.getBean(LifeCycleBean.class);
+        lifeCycleBean.print();
     }
 }
